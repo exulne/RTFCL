@@ -12,7 +12,7 @@ keys = list(forDiscord.keys())
 
 enabled_list = ["yt", "replace"]
 
-def RTFCL(content, enabled):
+def RTFCL(content):
     if content.startswith("http"):
         print("detected: website")
 
