@@ -4,24 +4,42 @@ import time
 blacklist = ["instagram.com", "google.com"]
 image_extensions = (".jpg", ".jpeg", ".png", ".webp", ".gif")
 
-def RTFCL(content):
-    if "x.com" in content:
-        print("detected: x.com")
-        i = content.find("x.com")
-        content = content[:i] + "fxtwitter" + content[i+1:]
+forDiscord = {
+    "x.com":"fxtwitter.com",
+    "reddit.com":"vxreddit.com"
+}
+keys = list(forDiscord.keys())
 
-    elif "youtube.com" in content:
-        print("detected: youtube.com")
-        i = content.find("?v=")
-        if i != -1:
-            print("detected: youtube video")
-            content = "https://youtu.be/" + content[i+3:]
+enabled_list = ["yt", "replace"]
 
-    elif content.startswith("http"):
+def RTFCL(content, enabled):
+    if content.startswith("http"):
+        print("detected: website")
+
+        # specific youtube check
+        if "youtube.com" in content:
+            print("detected: youtube.com")
+            i = content.find("?v=")
+            if i != -1:
+                print("detected: youtube video")
+                content = "https://youtu.be/" + content[i+3:]
+        
+        # general discord replacements
+        elif any(key in content for key in keys):
+            for key in keys:
+                if key in content:
+                    replacementSite = forDiscord[key]
+                    print(f"detected: {key}")
+                    i = content.find(key)
+
+                    content = content[:i] + replacementSite + content[i+len(key):]
+                    break
+
         print("detected: other link")
         if not content.lower().split("?")[0].endswith(image_extensions):
                 return content.split("?")[0]
-
+    else:
+        print("not a website, nothing to clear")
     return content
 
 def main():
