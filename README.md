@@ -10,4 +10,4 @@ Generally, will just remove trackers from links
 | youtube.com | replace youtube links with the non tracking youtu.be version. Will not affect links such as channel pages |
 
 ### Enabling Autostart
-for KDE, updated the `exec` line in RTFCL.desktop before moving it to $HOME/.config/autostart
+for KDE, updated the `Exec` line in RTFCL.desktop before moving it to $HOME/.config/autostart
