@@ -55,7 +55,7 @@ def main():
             is_website = current_data.strip().startswith("http")
             is_file = current_data.strip().startswith("file://")
 
-            if current_data != last_seen and current_data.strip() and not is_img and not is_file:
+            if current_data != last_seen and current_data.strip() and is_website:
                 print(f"Detected Something")
                 new_data = RTFCL(current_data.strip())
                 pyclip.copy(new_data)

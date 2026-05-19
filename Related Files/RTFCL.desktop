@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=*venv python location* *python location*
+Icon=application-x-shellscript
+Name=RTFCL.sh
+Type=Application
+X-KDE-AutostartScript=true

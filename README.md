@@ -8,3 +8,6 @@ Generally, will just remove trackers from links
 | x.com   | replace x.com with fxtwitter.com for discord sharing |
 | reddit.com | replace with vxreddit.com |
 | youtube.com | replace youtube links with the non tracking youtu.be version. Will not affect links such as channel pages |
+
+### Enabling Autostart
+for KDE, updated the 'exec' line in RTFCL.desktop before moving it to $HOME/.config/autostart
