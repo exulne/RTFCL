@@ -5,7 +5,7 @@ blacklist = ["instagram.com", "google.com"]
 image_extensions = (".jpg", ".jpeg", ".png", ".webp", ".gif")
 
 forDiscord = {
-    "x.com":"fxtwitter.com",
+    "https://x.com":"https://fxtwitter.com",
     "reddit.com":"vxreddit.com"
 }
 keys = list(forDiscord.keys())
