@@ -1,20 +1,25 @@
 import pyclip
 import time
+import json
 
 blacklist = ["instagram.com", "google.com"]
 image_extensions = (".jpg", ".jpeg", ".png", ".webp", ".gif")
 
 forDiscord = {
-    "https://x.com":"https://fxtwitter.com",
+    "https://x.com":"https://vxtwitter.com",
     "reddit.com":"vxreddit.com"
 }
+
 keys = list(forDiscord.keys())
 
 enabled_list = ["yt", "replace"]
 
 def RTFCL(content):
+    with open('/home/cubxfy/Projects/exulne/RTFCL/database/states.json', "r") as file:
+        data = json.load(file)
+        
     # specific youtube check
-    if "youtube.com" in content:
+    if "youtube.com" in content and data.get("youtube"):
         print("detected: youtube.com")
         i = content.find("?v=")
         if i != -1:
@@ -22,7 +27,7 @@ def RTFCL(content):
             content = "https://youtu.be/" + content[i+3:]
     
     # general discord replacements
-    elif any(key in content for key in keys):
+    elif any(key in content for key in keys) and data.get("discord"):
         for key in keys:
             if key in content:
                 replacementSite = forDiscord[key]
@@ -31,10 +36,11 @@ def RTFCL(content):
 
                 content = content[:i] + replacementSite + content[i+len(key):]
                 break
-
-    print("detected: other link")
-    if not content.lower().split("?")[0].endswith(image_extensions):
-            return content.split("?")[0]
+    
+    elif data.get("remaining"):
+        print("detected: other link")
+        if not content.lower().split("?")[0].endswith(image_extensions):
+                return content.split("?")[0]
 
     return content
 
