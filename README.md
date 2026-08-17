@@ -2,6 +2,10 @@
 Simple python script I run in the background to automatically update a few of my links when I copy them.
 Generally, will just remove trackers from links
 
+Added a TUI
+
+Not tested on windows yet
+
 ### Exceptions:
 | Website | Exception |
 |---------|-----------|
