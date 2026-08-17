@@ -13,9 +13,11 @@ class CheckboxDemo(App):
     def compose(self) -> ComposeResult:
         yield Header()
 
-        yield Checkbox("discord embedding", id="discord", value=data.get("discord", False))
+        yield Checkbox("twitter", id="twitter", value=data.get("twitter", False))
+        yield Checkbox("reddit", id="reddit", value=data.get("reddit", False))
         yield Checkbox("youtube -> RTFCL", id="youtube", value=data.get("youtube", False))
         yield Checkbox("whateversLeft", id="remaining", value=data.get("remaining", False))
+        yield Checkbox("all", id="all", value=data.get("all", False))
 
         yield Footer()
 

@@ -1,5 +1,7 @@
 {
-    "discord": true,
+    "twitter": true,
+    "reddit": true,
     "youtube": true,
-    "remaining": true
+    "remaining": true,
+    "all": true
 }
