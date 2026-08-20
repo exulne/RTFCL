@@ -99,7 +99,7 @@ def main():
             print(f"Error Checking: {e}")
 
         try:
-            if CurrentClip != last_seen and StrippedClip and is_website and ToggleStates.get("all"):              
+            if CurrentClip != last_seen and StrippedClip and is_website and not is_img and ToggleStates.get("all"):              
                 print(f"Detected {StrippedClip}")
                 cleanedLink = RTFCL(StrippedClip)
                 print("stripped" + StrippedClip)
