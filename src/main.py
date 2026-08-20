@@ -95,11 +95,14 @@ def main():
             is_website = StrippedClip.startswith("http")
             is_file = StrippedClip.startswith("file://")
 
+            is_ignore = is_img or is_file
+
+
         except Exception as e:
             print(f"Error Checking: {e}")
 
         try:
-            if CurrentClip != last_seen and StrippedClip and is_website and not is_img and ToggleStates.get("all"):              
+            if CurrentClip != last_seen and not is_ignore and ToggleStates.get("all"):              
                 print(f"Detected {StrippedClip}")
                 cleanedLink = RTFCL(StrippedClip)
                 print("stripped" + StrippedClip)
