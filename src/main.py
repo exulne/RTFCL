@@ -3,8 +3,8 @@ import time
 import json
 
 blacklist = ["instagram.com", "google.com"]
-image_headers = ["<meta", "<img"]
-image_extensions = [".jpg", ".jpeg", ".png", ".webp", ".gif"]
+image_headers = ("<meta", "<img")
+image_extensions = (".jpg", ".jpeg", ".png", ".webp", ".gif")
 
 TwitterPair = ["https://x.com","https://vxtwitter.com"]
 RedditPair = ["reddit.com","vxreddit.com"]
@@ -65,54 +65,54 @@ def main():
     print("Started Pyclip")
     # open json
     try:
-        with open('/home/cubxfy/Projects/exulne/RTFCL/database/states.json', "r") as file:
-            ToggleStates = json.load(file)
-        print("Loaded Json")
-    except Exception as e:
-        print(f"Json loading error {e}")
-
-
-    try:
-        last_seen = pyclip.paste(text=True)
+        lastSeen = pyclip.paste(text=True)
     except:
-        last_seen = ""
+        lastSeen = ""
 
 
     while True:
+        CurrentClip = ""
+        isText = True
+
         try:
             CurrentClip = pyclip.paste(text=True)
         except:
-            pyclip.copy("")
-            CurrentClip = ""
-        
-        StrippedClip = CurrentClip.strip()
+            isText = False
 
-        try:
-            for entry in image_headers:
-                is_img = True if StrippedClip.startswith(entry) else False
+        if isText and CurrentClip:
+            try:
+                with open('/home/cubxfy/Projects/exulne/RTFCL/database/states.json', "r") as file:
+                    ToggleStates = json.load(file)
+                print("Loaded Json")
+            except Exception as e:
+                print(f"Json loading error {e}")
+            if ToggleStates.get("all"):
+    
+                StrippedClip = CurrentClip.strip()
 
-            # checking if startswith http works for both http and https since http includes https
-            is_website = StrippedClip.startswith("http")
-            is_file = StrippedClip.startswith("file://")
+                # Correct image check logic
+                isImg = StrippedClip.startswith(image_headers) or StrippedClip.lower().endswith(image_extensions)
+                isWebsite = StrippedClip.startswith("http")
+                isFile = StrippedClip.startswith("file://")
+                isIgnore = isImg or isFile
 
-            is_ignore = is_img or is_file
 
-
-        except Exception as e:
-            print(f"Error Checking: {e}")
-
-        try:
-            if CurrentClip != last_seen and not is_ignore and ToggleStates.get("all"):              
-                print(f"Detected {StrippedClip}")
-                cleanedLink = RTFCL(StrippedClip)
-                print("stripped" + StrippedClip)
-                pyclip.copy(cleanedLink)
-                print(f"Updated Link: {cleanedLink}")
-                last_seen = cleanedLink
+                try:
+                    if CurrentClip != lastSeen and StrippedClip and not isIgnore:              
+                        print(f"Detected {StrippedClip}")
+                        cleanedLink = RTFCL(StrippedClip)
+                        print("stripped" + StrippedClip)
+                        pyclip.copy(cleanedLink)
+                        print(f"Updated Link: {cleanedLink}")
+                        lastSeen = cleanedLink
+                    else:
+                        lastSeen = CurrentClip
+                except Exception as e:
+                    print(f"Error Cleaning or Updating Link {e}")
             else:
-                last_seen = CurrentClip
-        except Exception as e:
-            print(f"Error Cleaning or Updating Link {e}")
+                continue
+        else:
+            lastSeen = ""
 
     time.sleep(1)
 

@@ -3,5 +3,5 @@
     "reddit": true,
     "youtube": true,
     "remaining": true,
-    "all": false
+    "all": true
 }
